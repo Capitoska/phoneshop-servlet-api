@@ -35,7 +35,7 @@
         <table>
             <tr>
                 <td>First name:</td>
-                <td><input name="firstName">${firstName}</td>
+                <td><input name="firstName" value="${param.get("firstName")}"></td>
                 <td class="error-message" style="border-color: white">
                     <c:forEach var="error" items="${errors.get('firstName')}">
                         ${error}
@@ -45,7 +45,7 @@
             </tr>
             <tr>
                 <td>Second name:</td>
-                <td><input name="secondName">${secondName}</td>
+                <td><input name="secondName" value="${param.get("secondName")}"></td>
                 <td class="error-message" style="border-color: white">
                     <c:forEach var="error" items="${errors.get('secondName')}">
                         ${error}
@@ -55,7 +55,7 @@
             </tr>
             <tr>
                 <td>Phone number:</td>
-                <td><input name="phoneNumber">${phoneNumber}</td>
+                <td><input name="phoneNumber" value="${param.get("phoneNumber")}"></td>
                 <td class="error-message" style="border-color: white">
                     <c:forEach var="error" items="${errors.get('phoneNumber')}">
                         ${error}
@@ -65,7 +65,7 @@
             </tr>
             <tr>
                 <td>Delivery Date:</td>
-                <td><input name="deliveryDate">${deliveryDate}</td>
+                <td><input name="deliveryDate" value="${param.get("deliveryDate")}"></td>
                 <td class="error-message" style="border-color: white">
                     <c:forEach var="error" items="${errors.get('deliveryDate')}">
                         ${error}
@@ -74,7 +74,7 @@
             </tr>
             <tr>
                 <td>Delivery Address:</td>
-                <td><input name="deliveryAddress">${deliveryAddress}</td>
+                <td><input name="deliveryAddress" value="${param.get("deliveryAddress")}"></td>
                 <td class="error-message" style="border-color: white">
                     <c:forEach var="error" items="${errors.get('deliveryAddress')}">
                         ${error}
@@ -83,8 +83,10 @@
             </tr>
             <tr>
                 <td>Payment Method:</td>
-                <td><input type="radio" name="paymentMethod" value="Credit cart"> credit cart
-                    <input type="radio" name="paymentMethod" value="money"> money
+                <td>
+                    <input type="radio" name="paymentMethod" value="1"> credit cart
+                    <input type="radio" name="paymentMethod" value="0"> money
+                </td>
                 <td class="error-message" style="border-color: white">
                     <c:forEach var="error" items="${errors.get('paymentMethod')}">
                         ${error}

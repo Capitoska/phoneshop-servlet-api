@@ -14,12 +14,12 @@ public class AbstractDefaultDao<T extends DaoItem> implements DefaultDao<T> {
     }
 
     @Override
-    public List<T> getAll() {
+    public synchronized List<T> getAll() {
         return items;
     }
 
     @Override
-    public T getById(Long id) {
+    public synchronized T getById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException();
         }
@@ -31,7 +31,7 @@ public class AbstractDefaultDao<T extends DaoItem> implements DefaultDao<T> {
     }
 
     @Override
-    public void save(T object) {
+    public synchronized void save(T object) {
         if (object == null) {
             throw new IllegalArgumentException();
         }
@@ -45,19 +45,17 @@ public class AbstractDefaultDao<T extends DaoItem> implements DefaultDao<T> {
 
 
     @Override
-    public void saveAll(List<T> objects) {
+    public synchronized void saveAll(List<T> objects) {
         objects.forEach(this::save);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public synchronized void deleteById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException();
         }
 
-        if (getAll().stream().anyMatch(t -> t.getId().equals(id))) {
-            getAll().remove(id);
-        } else {
+        if (!getAll().removeIf(t -> t.getId().equals(id))) {
             throw new IllegalArgumentException();
         }
     }

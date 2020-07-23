@@ -3,19 +3,17 @@ package com.es.phoneshop.dao;
 import com.es.phoneshop.model.Order;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ArrayListOrderDao extends AbstractDefaultDao<Order> implements OrderDao {
     private static OrderDao orderDao = new ArrayListOrderDao();
-    private List<Order> orderList = new ArrayList<>();
 
     public static OrderDao getInstance() {
         return orderDao;
     }
 
     public ArrayListOrderDao() {
-        super.init(this.orderList);
+        super.init(new ArrayList<Order>());
     }
 
     @Override
@@ -24,7 +22,7 @@ public class ArrayListOrderDao extends AbstractDefaultDao<Order> implements Orde
             throw new IllegalArgumentException();
         }
 
-        return this.orderList.stream()
+        return getAll().stream()
                 .filter(order -> order.getSecureId().equals(secretKey))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);

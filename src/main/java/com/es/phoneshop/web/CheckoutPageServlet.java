@@ -41,7 +41,7 @@ public class CheckoutPageServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/cart");
         } else {
             req.setAttribute("cart", cart);
-            req.setAttribute("paymentMethod", "money");
+            req.setAttribute("paymentMethod", "1");
             BigDecimal deliveryCost = orderService.getDeliveryCost();
             req.setAttribute("deliveryCost", deliveryCost);
             req.getRequestDispatcher("/WEB-INF/pages/checkoutPage.jsp").forward(req, resp);

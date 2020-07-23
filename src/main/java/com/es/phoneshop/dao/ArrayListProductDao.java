@@ -8,13 +8,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ArrayListProductDao extends AbstractDefaultDao<Product> implements ProductDao {
-    private ArrayList<Product> products;
 
 
     private ArrayListProductDao() {
-        this.products = new ArrayList<>();
-        super.init(this.products);
-
+        super.init(new ArrayList<Product>());
     }
 
     public static ArrayListProductDao getInstance() {
@@ -37,7 +34,7 @@ public class ArrayListProductDao extends AbstractDefaultDao<Product> implements 
 
     @Override
     public synchronized List<Product> findProducts(String query, String order, String sort) {
-        List<Product> foundProducts = this.products.stream()
+        List<Product> foundProducts = getAll().stream()
                 .filter(product -> product.getStock() > 0)
                 .filter(product -> product.getCurrentPrice() != null)
                 .collect(Collectors.toList());
@@ -75,18 +72,13 @@ public class ArrayListProductDao extends AbstractDefaultDao<Product> implements 
     }
 
     @Override
-    public Product getById(Long id) {
-        return super.getById(id);
-    }
-
-    @Override
     public void save(Product product) {
         try {
             Product existProduct = getById(product.getId());
             update(product, existProduct);
         } catch (NoSuchElementException | IllegalArgumentException illegalArgumentException) {
-            product.setId(Integer.toUnsignedLong(products.size()));
-            products.add(product);
+            product.setId(Integer.toUnsignedLong(getAll().size()));
+            getAll().add(product);
         }
     }
 
@@ -99,13 +91,4 @@ public class ArrayListProductDao extends AbstractDefaultDao<Product> implements 
         oldProduct.setStock(updateProduct.getStock());
     }
 
-    @Override
-    public synchronized void deleteById(Long id) {
-        products.removeIf(product -> product.getId().equals(id));
-    }
-
-    @Override
-    public void saveAll(List<Product> newProducts) {
-        newProducts.forEach(this::save);
-    }
 }

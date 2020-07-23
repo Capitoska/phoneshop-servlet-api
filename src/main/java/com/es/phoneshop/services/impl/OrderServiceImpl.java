@@ -39,7 +39,6 @@ public class OrderServiceImpl implements OrderService {
         this.orderDao = ArrayListOrderDao.getInstance();
     }
 
-
     @Override
     public Order generateOrder(Cart cart, Customer customer, HashMap<String, String> additionalInformation) {
         Order order = new Order();
@@ -51,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCustomer(customer);
         order.setDeliveryAddress(additionalInformation.get("deliveryAddress"));
         order.setDeliveryDate(additionalInformation.get("deliveryDate"), "DD.MM.yyyy");
-        order.setPaymentMethod(PaymentMethod.getByName(additionalInformation.get("paymentMethod")));
+        order.setPaymentMethod(PaymentMethod.valueOf(Integer.parseInt(additionalInformation.get("paymentMethod"))));
         return order;
     }
 

@@ -39,7 +39,7 @@ public class ArrayListProductDaoTest {
     private Price priceForSave;
 
     @Spy
-    private ArrayList<Product> products;
+    private ArrayList<Product> items;
 
     @InjectMocks
     private ArrayListProductDao arrayListProductDao = ArrayListProductDao.getInstance();
@@ -49,7 +49,7 @@ public class ArrayListProductDaoTest {
 
     @Before
     public void setup() {
-        products.addAll(Arrays.asList(product1, product2));
+        items.addAll(Arrays.asList(product1, product2));
         when(product1.getStock()).thenReturn(42);
         when(product1.getDescription()).thenReturn("Iphone");
         when(product1.getId()).thenReturn(ID_FIRST_PRODUCT);
@@ -66,8 +66,6 @@ public class ArrayListProductDaoTest {
         when(productForSave.getDescription()).thenReturn("Xiaomi");
         when(productForSave.getCurrentPrice()).thenReturn(price2);
         when(priceForSave.getCost()).thenReturn(new BigDecimal(2500));
-
-
     }
 
     @Test
