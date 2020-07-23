@@ -5,6 +5,7 @@ import com.es.phoneshop.enums.ProductSortBy;
 import com.es.phoneshop.model.Product;
 
 import java.util.*;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 public class ArrayListProductDao extends AbstractDefaultDao<Product> implements ProductDao {
@@ -25,10 +26,13 @@ public class ArrayListProductDao extends AbstractDefaultDao<Product> implements 
 
     private List<Product> findProductsByQuery(String query, List<Product> products) {
         String[] words = query.toLowerCase().split(" ");
+        ToIntFunction<Product> matchCount = product -> (int) Arrays.stream(words)
+                .filter(word -> product.getDescription().toLowerCase().contains(word))
+                .count();
+
         return products.stream().filter(product -> Arrays.stream(words)
                 .anyMatch(word -> product.getDescription().toLowerCase().contains(word)))
-                .sorted(Comparator.comparingInt(product -> (int) Arrays.stream(words)
-                        .filter(word -> product.getDescription().toLowerCase().contains(word)).count()))
+                .sorted(Comparator.comparingInt(matchCount).reversed())
                 .collect(Collectors.toList());
     }
 
