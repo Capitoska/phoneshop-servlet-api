@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-    List<CartItem> cartItems;
-    BigDecimal price;
+    private List<CartItem> cartItems;
+    private BigDecimal price;
 
     public Cart() {
         this.cartItems = new ArrayList<>();

@@ -15,5 +15,5 @@ public interface CartService {
 
     void clearCart(Cart cart);
 
-    void updateWithoutChangesProducts(Cart cart);
+    void validateCartItems(Cart cart);
 }

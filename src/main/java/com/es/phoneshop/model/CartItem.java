@@ -1,8 +1,8 @@
 package com.es.phoneshop.model;
 
 public class CartItem {
-    Product product;
-    Long quantity;
+    private Product product;
+    private Long quantity;
 
     public CartItem(Product product, Long quantity) {
         this.product = product;

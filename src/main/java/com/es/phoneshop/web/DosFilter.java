@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DosFilter implements Filter {
-    DosService dosService;
+    private DosService dosService;
     private final int TOO_MANY_REQUEST = 429;
 
     @Override
@@ -18,6 +18,7 @@ public class DosFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
         String ip = request.getLocalAddr();
         if (dosService.isAllowed(ip)) {
             chain.doFilter(request, response);

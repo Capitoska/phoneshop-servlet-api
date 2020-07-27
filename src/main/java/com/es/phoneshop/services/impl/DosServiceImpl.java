@@ -11,8 +11,8 @@ public class DosServiceImpl implements DosService {
     private static final Integer AMOUNT_QUERIES_PER_TIME = 20;
     private static final Integer CHECK_TIME_IN_SECONDS = 60;
     private static final Integer BAN_TIME_IN_SECONDS = 120;
-    HashMap<String, LocalDateTime> blockedIp = new HashMap<>();
-    HashMap<String, List<IpInfo>> stringListHashMap = new HashMap<>();
+    private HashMap<String, LocalDateTime> blockedIp = new HashMap<>();
+    private HashMap<String, List<IpInfo>> stringListHashMap = new HashMap<>();
 
     public static class IpInfo {
         private LocalDateTime timeToQuery;
@@ -42,14 +42,15 @@ public class DosServiceImpl implements DosService {
         if (!isBanned(ip)) {
             stringListHashMap.putIfAbsent(ip, new ArrayList<>());
             int countQueries = 0;
-            for (int i = stringListHashMap.get(ip).size() - 1; i >= 0; i--) {
-                if (stringListHashMap.get(ip).get(i).timeToQuery.isBefore(LocalDateTime.now().minusSeconds(CHECK_TIME_IN_SECONDS))) {
+            List<IpInfo> ipInfos = stringListHashMap.get(ip);
+            for (int i = ipInfos.size() - 1; i >= 0; i--) {
+                if (ipInfos.get(i).timeToQuery.isBefore(LocalDateTime.now().minusSeconds(CHECK_TIME_IN_SECONDS))) {
                     break;
                 }
                 countQueries++;
             }
             if (countQueries < AMOUNT_QUERIES_PER_TIME) {
-                stringListHashMap.get(ip).add(new IpInfo(LocalDateTime.now()));
+                ipInfos.add(new IpInfo(LocalDateTime.now()));
                 return true;
             } else {
                 toBlockByIp(ip);

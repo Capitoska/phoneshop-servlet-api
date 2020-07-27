@@ -9,57 +9,54 @@ public class AbstractDefaultDao<T extends DaoItem> implements DefaultDao<T> {
 
     private List<T> items;
 
-    public void init(List<T> items) {
+    public AbstractDefaultDao(List<T> items) {
         this.items = items;
     }
 
     @Override
-    public List<T> getAll() {
+    public synchronized List<T> getAll() {
         return items;
     }
 
     @Override
-    public T getById(Long id) {
+    public synchronized T getById(Long id) {
         if (id == null) {
-            new IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
 
-        return items.stream()
+        return getAll().stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
     }
 
     @Override
-    public void save(T object) {
+    public synchronized void save(T object) {
         if (object == null) {
-            new IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
 
-        if (items.stream().noneMatch(t -> t.getId().equals(object.getId()))) {
-            items.add(object);
+        if (getAll().stream().noneMatch(t -> t.getId().equals(object.getId()))) {
+            getAll().add(object);
         } else {
-            new IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
     }
 
 
-    //todo think about realization
     @Override
-    public void saveAll(List<T> objects) {
-        objects.stream().forEach(this::save);
+    public synchronized void saveAll(List<T> objects) {
+        objects.forEach(this::save);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public synchronized void deleteById(Long id) {
         if (id == null) {
-            new IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
 
-        if (!items.stream().noneMatch(t -> t.getId().equals(id))) {
-            items.remove(id);
-        } else {
-            new IllegalArgumentException();
+        if (!getAll().removeIf(t -> t.getId().equals(id))) {
+            throw new IllegalArgumentException();
         }
     }
 }

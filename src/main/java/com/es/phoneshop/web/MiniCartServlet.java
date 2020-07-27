@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class MiniCartServlet extends HttpServlet {
-    CartService cartService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
@@ -20,6 +20,13 @@ public class MiniCartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Cart cart = cartService.getCart(req);
+        req.setAttribute("cart", cart);
+        req.getRequestDispatcher("/WEB-INF/pages/miniCart.jsp").include(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cart cart = cartService.getCart(req);
         req.setAttribute("cart", cart);
         req.getRequestDispatcher("/WEB-INF/pages/miniCart.jsp").include(req, resp);

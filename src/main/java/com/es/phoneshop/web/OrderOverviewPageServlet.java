@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class OrderOverviewPageServlet extends HttpServlet {
-    OrderService orderService;
+    private OrderService orderService;
 
     @Override
     public void init() throws ServletException {
