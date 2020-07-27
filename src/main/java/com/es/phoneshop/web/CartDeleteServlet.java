@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CartDeleteServlet extends HttpServlet {
-    CartService cartService;
+    private CartService cartService;
 
     @Override
     public void init() {

@@ -16,7 +16,6 @@ import java.util.List;
 public class DemodataServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//      Boolean DemodataIsEnabled = sce.getServletContext().getInitParameter("demodata").equals("enable");
         String demodata = sce.getServletContext().getInitParameter("demodata");
         if (demodata.equalsIgnoreCase("enable")) {
             ProductDao productDao = ArrayListProductDao.getInstance();

@@ -11,8 +11,8 @@ public class DosServiceImpl implements DosService {
     private static final Integer AMOUNT_QUERIES_PER_TIME = 20;
     private static final Integer CHECK_TIME_IN_SECONDS = 60;
     private static final Integer BAN_TIME_IN_SECONDS = 120;
-    HashMap<String, LocalDateTime> blockedIp = new HashMap<>();
-    HashMap<String, List<IpInfo>> stringListHashMap = new HashMap<>();
+    private HashMap<String, LocalDateTime> blockedIp = new HashMap<>();
+    private HashMap<String, List<IpInfo>> stringListHashMap = new HashMap<>();
 
     public static class IpInfo {
         private LocalDateTime timeToQuery;

@@ -84,8 +84,8 @@
             <tr>
                 <td>Payment Method:</td>
                 <td>
-                    <input type="radio" name="paymentMethod" value="1"> credit cart
-                    <input type="radio" name="paymentMethod" value="0"> money
+                    <input type="radio" name="paymentMethod" value="CREDIT_CART"> credit cart
+                    <input type="radio" name="paymentMethod" value="MONEY"> money
                 </td>
                 <td class="error-message" style="border-color: white">
                     <c:forEach var="error" items="${errors.get('paymentMethod')}">

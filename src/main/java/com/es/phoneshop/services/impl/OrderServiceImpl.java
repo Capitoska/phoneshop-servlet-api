@@ -16,8 +16,8 @@ import java.util.UUID;
 
 public class OrderServiceImpl implements OrderService {
     public final BigDecimal DELIVERY_COST = new BigDecimal(5);
-    OrderDao orderDao;
-    ProductDao productDao;
+    private OrderDao orderDao;
+    private ProductDao productDao;
 
     private static volatile OrderServiceImpl orderService;
 
@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCustomer(customer);
         order.setDeliveryAddress(additionalInformation.get("deliveryAddress"));
         order.setDeliveryDate(additionalInformation.get("deliveryDate"), "DD.MM.yyyy");
-        order.setPaymentMethod(PaymentMethod.valueOf(Integer.parseInt(additionalInformation.get("paymentMethod"))));
+        order.setPaymentMethod(PaymentMethod.valueOf(additionalInformation.get("paymentMethod")));
         return order;
     }
 

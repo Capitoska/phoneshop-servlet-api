@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DosFilter implements Filter {
-    DosService dosService;
+    private DosService dosService;
     private final int TOO_MANY_REQUEST = 429;
 
     @Override

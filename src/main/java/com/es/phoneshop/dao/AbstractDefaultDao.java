@@ -9,7 +9,7 @@ public class AbstractDefaultDao<T extends DaoItem> implements DefaultDao<T> {
 
     private List<T> items;
 
-    public void init(List<T> items) {
+    public AbstractDefaultDao(List<T> items) {
         this.items = items;
     }
 

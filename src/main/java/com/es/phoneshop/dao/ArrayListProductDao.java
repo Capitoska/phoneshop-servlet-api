@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class ArrayListProductDao extends AbstractDefaultDao<Product> implements ProductDao {
 
-
     private ArrayListProductDao() {
-        super.init(new ArrayList<Product>());
+        super(new ArrayList<Product>());
     }
+
 
     public static ArrayListProductDao getInstance() {
         return ProductDaoHolder.instance;
@@ -52,7 +52,7 @@ public class ArrayListProductDao extends AbstractDefaultDao<Product> implements 
     }
 
     @Override
-    public void reduceAmountProducts(Product orderProduct, Long val) {
+    public synchronized void reduceAmountProducts(Product orderProduct, Long val) {
         Product currentProduct = getById(orderProduct.getId());
         currentProduct.setStock(currentProduct.getStock() - val.intValue());
     }
@@ -76,7 +76,7 @@ public class ArrayListProductDao extends AbstractDefaultDao<Product> implements 
     }
 
     @Override
-    public void save(Product product) {
+    public synchronized void save(Product product) {
         try {
             Product existProduct = getById(product.getId());
             update(product, existProduct);

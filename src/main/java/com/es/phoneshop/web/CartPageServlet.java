@@ -15,7 +15,7 @@ import java.util.Map;
 public class CartPageServlet extends HttpServlet {
 
 
-    CartService cartService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {

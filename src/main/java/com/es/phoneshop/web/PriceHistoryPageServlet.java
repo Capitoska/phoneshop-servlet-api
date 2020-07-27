@@ -14,8 +14,8 @@ import java.io.IOException;
 
 public class PriceHistoryPageServlet extends HttpServlet {
 
-    ProductDao productDao;
-    RecentlyViewedService recentlyViewedService;
+    private ProductDao productDao;
+    private RecentlyViewedService recentlyViewedService;
 
     @Override
     public void init() throws ServletException {

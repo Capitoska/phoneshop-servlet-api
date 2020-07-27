@@ -12,12 +12,12 @@ public class ArrayListOrderDao extends AbstractDefaultDao<Order> implements Orde
         return orderDao;
     }
 
-    public ArrayListOrderDao() {
-        super.init(new ArrayList<Order>());
+    private ArrayListOrderDao() {
+        super(new ArrayList<Order>());
     }
 
     @Override
-    public Order getBySecretId(String secretKey) {
+    public synchronized Order getBySecretId(String secretKey) {
         if (secretKey == null) {
             throw new IllegalArgumentException();
         }

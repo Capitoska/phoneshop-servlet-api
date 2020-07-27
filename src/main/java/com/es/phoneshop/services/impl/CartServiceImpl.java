@@ -92,9 +92,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void updateWithoutChangesProducts(Cart cart) throws IllegalArgumentException, NotEnoughElementsException {
+    public void validateCartItems(Cart cart) throws IllegalArgumentException, NotEnoughElementsException {
         List<CartItem> cartItems = cart.getCartItems();
-        cartItems.stream().forEach(cartItem -> update(cart, cartItem.getProduct().getId(), cartItem.getQuantity()));
+        cartItems.forEach(cartItem -> update(cart, cartItem.getProduct().getId(), cartItem.getQuantity()));
     }
 
     @Override

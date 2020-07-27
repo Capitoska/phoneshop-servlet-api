@@ -39,7 +39,7 @@ public class CheckoutPageServlet extends HttpServlet {
 
         if (cart.getCartItems().size() == 0) {
             resp.sendRedirect(req.getContextPath() + "/cart");
-        } else {
+        } else { 
             req.setAttribute("cart", cart);
             req.setAttribute("paymentMethod", "1");
             BigDecimal deliveryCost = orderService.getDeliveryCost();
@@ -55,7 +55,7 @@ public class CheckoutPageServlet extends HttpServlet {
         checkAllFieldOnValid(req, errors);
         if (errors.isEmpty()) {
             try {
-                cartService.updateWithoutChangesProducts(cart);
+                cartService.validateCartItems(cart);
             } catch (Exception e) {
                 resp.sendError(UNPROCESSABLE_ENTITY, e.getMessage() + " make update your cart.");
             }
