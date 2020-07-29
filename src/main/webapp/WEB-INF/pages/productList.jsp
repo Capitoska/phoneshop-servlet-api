@@ -44,6 +44,9 @@
             </tr>
         </c:forEach>
     </table>
+    <a href="advancedSearch">
+        Advanced search
+    </a>
     <jsp:include page="/cart/minicart"/>
     <tags:viewed-product/>
 </tags:master>
