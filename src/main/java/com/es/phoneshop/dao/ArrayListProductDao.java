@@ -2,9 +2,11 @@ package com.es.phoneshop.dao;
 
 import com.es.phoneshop.enums.ProductOrderBy;
 import com.es.phoneshop.enums.ProductSortBy;
+import com.es.phoneshop.model.AdvancedSearch;
 import com.es.phoneshop.model.Product;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
@@ -49,6 +51,30 @@ public class ArrayListProductDao extends AbstractDefaultDao<Product> implements 
             foundProducts = sortProductsByOrderAndSort(foundProducts, order, sort);
         }
         return foundProducts;
+    }
+
+
+    @Override
+    public List<Product> findProductsByAdvancedSearch(AdvancedSearch advancedSearch) {
+        List<Product> products = findProducts(
+                advancedSearch.getDescription(), null, null);
+
+        List<Predicate<Product>> predicates = new ArrayList<>();
+        if (advancedSearch.getMaxPrice() != null) {
+            predicates.add(product -> product.getCurrentPrice().getCost().compareTo(advancedSearch.getMaxPrice()) < 0);
+        }
+
+        if (advancedSearch.getMinPrice() != null) {
+            predicates.add(product -> product.getCurrentPrice().getCost().compareTo(advancedSearch.getMinPrice()) > 0);
+        }
+
+        if (advancedSearch.getMinStock() != null) {
+            predicates.add(product -> product.getStock() > advancedSearch.getMinStock());
+        }
+        if (predicates.size() == 0) {
+            return products;
+        }
+        return products.stream().filter((predicates.stream().reduce(Predicate::and).orElse(predicates.get(0)))).collect(Collectors.toList());
     }
 
     @Override

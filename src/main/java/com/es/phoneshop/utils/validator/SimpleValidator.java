@@ -8,7 +8,9 @@ public interface SimpleValidator {
     SimpleValidator setCheckedValue(Object checkedValue);
     List getErrorMessages();
     SimpleValidator notEmpty();
+    SimpleValidator isNumeric();
     String getFirstErrorIfExist();
+    SimpleValidator numberMoreThen(Integer value);
     SimpleValidator newErrorList();
     SimpleValidator addToMapErrorsIfExist(Map<String, List<String>> mapErrors, String keyForMapErrors);
     SimpleValidator isPhoneNumber();

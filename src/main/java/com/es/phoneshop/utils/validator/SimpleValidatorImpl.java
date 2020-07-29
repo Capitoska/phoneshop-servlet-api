@@ -53,8 +53,37 @@ public class SimpleValidatorImpl implements SimpleValidator {
     }
 
     @Override
+    public SimpleValidator isNumeric() {
+        try {
+            Integer.parseInt(this.checkedValue.toString());
+        } catch (NumberFormatException e) {
+            this.errorsList.add("This field must be number");
+        }
+        return this;
+    }
+
+
+    @Override
     public String getFirstErrorIfExist() {
         return getErrorMessages().get(0);
+    }
+
+    @Override
+    public SimpleValidator numberMoreThen(Integer value) {
+        try {
+            int checkedIntValue;
+            if (this.checkedValue.toString().equals(""))
+                checkedIntValue = 0;
+            else {
+                checkedIntValue = Integer.parseInt(this.checkedValue.toString());
+            }
+            if (checkedIntValue <= value) {
+                this.errorsList.add("This field must be more then " + value);
+            }
+        } catch (NumberFormatException e) {
+            this.errorsList.add("This field must be number");
+        }
+        return this;
     }
 
 
